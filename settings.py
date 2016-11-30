@@ -14,7 +14,7 @@ logging.basicConfig(filename='alineamiento.log',level=logging.DEBUG, format='%(a
 
 dir_porcentajes = os.getcwd()+'/test_data/porcentaje'
 dir_matrices = os.getcwd()+'/test_data/matrices'
-dir_destino = os.getcwd()+'/test_data/resultados'
+dir_destino = os.getcwd()+'/test_data'
 
 
 #min_porcent_range, max_porcent_range
