@@ -47,7 +47,7 @@ if __name__ == "__main__":
     #min_range_accepted HASTA 5000
 
     # obtengo conexión
-    connection = get_base_connection('postgres' , 'postgres' , 'admin')
+    connection = get_base_connection('postgres' , '' , 'admin')
     #obtengo cursor
     cursor = get_cursor(connection)
 
