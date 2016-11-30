@@ -15,7 +15,7 @@
 
 import os;
 import psycopg2
-from tkinter import messagebox
+#from tkinter import messagebox
 import xlwt
 
 import linecache
@@ -575,7 +575,7 @@ def MainProcess(connection, cursor, path_porc, path_mat, porcentaje_names, matri
         close_connection(connection)
 
         #Poner alerta
-        messagebox.showerror("Alert" , "Something happened, please run the aplication again or call IT department")
+        #messagebox.showerror("Alert" , "Something happened, please run the aplication again or call IT department")
 
 
 
