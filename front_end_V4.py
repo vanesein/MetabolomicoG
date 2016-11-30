@@ -24,7 +24,7 @@ from archivos_cibe_V7 import GraphPorcent
 from conect_trans import *
 
 # obtiene los nombres de los archivos en un directorio
-def GetNamesDirectorio(self, path_dir):
+def GetNamesDirectorio( path_dir):
     f = []
     for (dirpath, dirnames, filenames) in os.walk(path_dir):
         f.extend(filenames)
@@ -37,9 +37,9 @@ if __name__ == "__main__":
     dir_destino = os.getcwd()+'/test_data'
 
     #lista de nombres de archivos de porcentajes del directorio pasado por parámetro
-    porcentaje_names = self.GetNamesDirectorio(dir_porcentajes)
+    porcentaje_names = GetNamesDirectorio(dir_porcentajes)
     #lista de nombres de archivos de matriz del directorio pasado por parámetro
-    matriz_names = self.GetNamesDirectorio(dir_matrices)
+    matriz_names = GetNamesDirectorio(dir_matrices)
 
 
     #min_porcent_range, max_porcent_range
