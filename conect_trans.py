@@ -59,7 +59,7 @@ def obtener_numero_lineas_archivo(connection , cursor , nombre_archivo):
 def obtener_fila(connection , cursor , indice):
     sentencia = "select linea from archivos where inidice_linea = '" + str(indice) + "'"
     linea = execute_select(cursor , sentencia)
-    return ((linea[0])[0]) # el string del primero de la tupla de la primera posición de la lista
+    return ((linea[0])[0]) # el string del primero de la tupla de la primera posicion de la lista
 
 #obtengo una cantidad (select count)
 def execute_select_count(cursor , sql):
