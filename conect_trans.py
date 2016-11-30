@@ -4,7 +4,7 @@ import psycopg2
 
 #obtiene la conexion de base de datos, en este caso es postgres y se usa el driver psycog2 para la comunicacion
 def get_base_connection(database , usuario , contrasena):
-    conn = psycopg2.connect(database= database, user= usuario, password= contrasena, host="127.0.0.1", port="5432")
+    conn = psycopg2.connect(database= database, user= usuario, host="127.0.0.1", port="5432")
     return conn
 
 #obtiene un cursor de la base de datos
