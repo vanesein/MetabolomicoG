@@ -23,6 +23,7 @@ import math
 import time
 
 from conect_trans import *
+from settings import logging
 
 #clase que representa a un compuesto (fila del archivo)
 class pfile(object):
@@ -63,9 +64,6 @@ class cfile(object):
 class nline(object):
     pos = 0
     value = 0
-    
-
-
 
 #quita la extension de cada nombre de archivo de una lista
 def arregla_nombres(name):
@@ -275,8 +273,9 @@ def armar_linea_base (L_procesar , indice) :
 
 #función principal, recibe la ruta del directorio de archivos de compuestos, ruta de archivos de matrices, rango de tiempo de medición, nombre del archivo de destino
 def MainProcess(connection, cursor, path_porc, path_mat, porcentaje_names, matriz_names, path_dest , intervalo_time, file_destino, min_range_accepted, min_porcent_range, max_porcent_range):
-    
+
     time1 = time.time()
+    
     try:
         
         #get minimum retention time from first lines of all documents
@@ -567,12 +566,17 @@ def MainProcess(connection, cursor, path_porc, path_mat, porcentaje_names, matri
     except Exception as e:
         error_msg = str(e)
         print (error_msg)
-        close_connection(connection)
-        #cuando se cae el programa no funciona utilizar la misma conexión
-        connection = get_base_connection('postgres', 'postgres', 'admin')
-        cursor = get_cursor(connection)
-        borrar_tabla_temporal(connection , cursor)
-        close_connection(connection)
+        logging.error(error_msg)
+        logging.exception("*exceptionAC*")
+        #logging.exception(error_msg)
+        #print("****fgdfgdf****")
+        #print (error_msg)
+        #close_connection(connection)
+#        #cuando se cae el programa no funciona utilizar la misma conexión
+#        connection = get_base_connection('postgres', 'postgres', 'admin')
+#        cursor = get_cursor(connection)
+#        borrar_tabla_temporal(connection , cursor)
+#        close_connection(connection)
 
         #Poner alerta
         #messagebox.showerror("Alert" , "Something happened, please run the aplication again or call IT department")
@@ -585,7 +589,7 @@ def MainProcess(connection, cursor, path_porc, path_mat, porcentaje_names, matri
 def GraphPorcent(path_porc, path_mat, path_dest , intervalo_time, nombre_destino):
     # obtengo conexión
     connection = get_base_connection('postgres' , 'postgres' , 'admin')
-#    #obtengo cursor
+    #obtengo cursor
     cursor = get_cursor(connection)
 
     try:
@@ -688,5 +692,5 @@ def GraphPorcent(path_porc, path_mat, path_dest , intervalo_time, nombre_destino
         borrar_tabla_temporal(connection , cursor)
         close_connection(connection)
 
-#        #Poner alerta
+        #Poner alerta
         messagebox.showerror("Alert" , "Something happened, please run the aplication again or call IT department")
