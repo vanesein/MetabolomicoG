@@ -77,7 +77,7 @@ if __name__ == "__main__":
             MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
 
         elif opc_run==2:
-            for intensidad_aceptacion in range(100,5000):
+            for intensidad_aceptacion in range(100,5001):
                 
                 intervalo_time = 0.1
                 while(intervalo_time<=30):
@@ -86,7 +86,7 @@ if __name__ == "__main__":
         
                     MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
 
-                intervalo_time = round(intervalo_time + 0.1,2)
+                    intervalo_time = round(intervalo_time + 0.1,2)
 
         else:
             for intensidad_aceptacion in range(100,5000):
