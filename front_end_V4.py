@@ -72,11 +72,11 @@ if __name__ == "__main__":
 
         # lock to serialize console output
         #lock = threading.Lock()
-        if opc_run==1:
+        if opc_run==1 :
             file_destino = 'align1'
             MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
 
-        else if opc_run==2:
+        elif opc_run==2:
             for intensidad_aceptacion in range(100,5000):
                 
                 intervalo_time = 0.1
@@ -87,7 +87,7 @@ if __name__ == "__main__":
                     MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
 
                 intervalo_time = round(intervalo_time + 0.1,2)
-                
+
         else:
             for intensidad_aceptacion in range(100,5000):
                 
