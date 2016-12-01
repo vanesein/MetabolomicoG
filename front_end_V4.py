@@ -72,29 +72,43 @@ if __name__ == "__main__":
 
         # lock to serialize console output
         #lock = threading.Lock()
+        if opc_run==1:
+            file_destino = 'align1'
+            MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
 
-        file_destino = 'align'
-        
-        for intensidad_aceptacion in range(100,5000):
-            
-            intervalo_time = 0.1
-            while(intervalo_time<=30):
+        else if opc_run==2:
+            for intensidad_aceptacion in range(100,5000):
                 
-                min_interval_confianza = 0.01
-                while(min_interval_confianza<=1):
-    
-                    max_interval_confianza = 0.01
-                    while(max_interval_confianza<=1):
-                    
-                        file_destino = 'align_'+str(intervalo_time)+'_'+str(intensidad_aceptacion)+'_'+str(min_interval_confianza)+'_'+str(max_interval_confianza)
-    
-                        MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
-                    
-                        max_interval_confianza = round(max_interval_confianza + 0.01,2)
-    
-                    min_interval_confianza = round(min_interval_confianza + 0.01,2)
-    
+                intervalo_time = 0.1
+                while(intervalo_time<=30):
+  
+                    file_destino = 'align_'+str(intervalo_time)+'_'+str(intensidad_aceptacion)+'_'+str(min_interval_confianza)+'_'+str(max_interval_confianza)
+        
+                    MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
+
                 intervalo_time = round(intervalo_time + 0.1,2)
+                
+        else:
+            for intensidad_aceptacion in range(100,5000):
+                
+                intervalo_time = 0.1
+                while(intervalo_time<=30):
+                    
+                    min_interval_confianza = 0.01
+                    while(min_interval_confianza<=1):
+        
+                        max_interval_confianza = 0.01
+                        while(max_interval_confianza<=1):
+                        
+                            file_destino = 'align_'+str(intervalo_time)+'_'+str(intensidad_aceptacion)+'_'+str(min_interval_confianza)+'_'+str(max_interval_confianza)
+        
+                            MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
+                        
+                            max_interval_confianza = round(max_interval_confianza + 0.01,2)
+        
+                        min_interval_confianza = round(min_interval_confianza + 0.01,2)
+        
+                    intervalo_time = round(intervalo_time + 0.1,2)
         
 
         # Create the queue and thread pool.
@@ -105,7 +119,7 @@ if __name__ == "__main__":
 #             t.start()
 #
 #        for intensidad_aceptacion in range(100,103):
-        #MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
+        
 #            q.put((connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza))
 #
 #        q.join()       # block until all tasks are done

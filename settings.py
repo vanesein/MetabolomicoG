@@ -21,7 +21,8 @@ dir_destino = os.getcwd()+'/test_data'
 #intervalo_time, nombre_destino, min_range_accepted,
 #min_range_accepted HASTA 5000
 intervalo_time = 0.1
-min_interval_confianza = 0.01
-max_interval_confianza = 0.01
+min_interval_confianza = 0.15
+max_interval_confianza = 0.15
 intensidad_aceptacion = 100
 
+opc_run = 2
