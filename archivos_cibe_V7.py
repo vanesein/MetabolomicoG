@@ -283,7 +283,7 @@ def MainProcess(connection, cursor, path_porc, path_mat, porcentaje_names, matri
         
         #voy a recoger los elementos que caigan en este rango, comienza de 0
         contador_minutos = min_ret_time
-        print("contador_minutos "+str(contador_minutos))
+        #print("contador_minutos "+str(contador_minutos))
         #lista de elementos a procesar en cada rango de tiempo
         L_procesar = []
         i = 1
@@ -386,14 +386,14 @@ def MainProcess(connection, cursor, path_porc, path_mat, porcentaje_names, matri
                         if(q.bandera_cambio == 0):
                             #si la comparacion entre fragmentos es buena
                             #if (comparar_fragmentos(p.fragments,q.fragments) == 1):
-                            print("*********")
-                            print(p.file_name)
-                            print("RT: "+ str(p.retention_time)+" MaxScan: " + str(p.max_scan))
-                            print(q.file_name)
-                            print("RT: "+ str(q.retention_time)+" MaxScan: " + str(q.max_scan))
-                            print("*********")
+                            #print("*********")
+                            #print(p.file_name)
+                            #print("RT: "+ str(p.retention_time)+" MaxScan: " + str(p.max_scan))
+                            #print(q.file_name)
+                            #print("RT: "+ str(q.retention_time)+" MaxScan: " + str(q.max_scan))
+                            #print("*********")
                             if (compare_fragments(p.fragments, q.fragments, min_range_accepted, min_porcent_range, max_porcent_range) == True):
-                                print("bandera_contador" + str(bandera_contador))
+                                #print("bandera_contador" + str(bandera_contador))
                                 p.bandera_cambio = bandera_contador    
                                 q.bandera_cambio = bandera_contador
                                 q.pareja = True
@@ -471,7 +471,7 @@ def MainProcess(connection, cursor, path_porc, path_mat, porcentaje_names, matri
                                     q.checked = True
                                    
 
-                    print("tam de C_procesar: "+ str(len(C_procesar)))
+                    #print("tam de C_procesar: "+ str(len(C_procesar)))
 
 
                     if(len(C_procesar)>0):
