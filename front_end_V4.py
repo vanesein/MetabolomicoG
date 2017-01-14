@@ -60,10 +60,6 @@ if __name__ == "__main__":
     #lista de nombres de archivos de matriz del directorio pasado por parámetro
     matriz_names = GetNamesDirectorio(dir_matrices)
 
-    print(dir_porcentajes)
-    print(dir_matrices)
-    print(dir_destino)
-
     try:
         # obtengo conexión
         connection = get_base_connection('postgres' , 'postgres' , '')
@@ -73,7 +69,7 @@ if __name__ == "__main__":
         # lock to serialize console output
         #lock = threading.Lock()
         if opc_run==1 :
-            file_destino = 'align1'
+            file_destino = 'align_0.2_278_0.15_0.15'
             MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
 
         elif opc_run==2:

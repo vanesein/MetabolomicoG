@@ -360,9 +360,9 @@ def MainProcess(connection, cursor, path_porc, path_mat, porcentaje_names, matri
 
 
             
-            #print("len de L_procesar: "+ str(len(L_procesar)))
-            #for x in range(0,len(L_procesar)):
-            #    print ("pos d L_procesar q existen: " + str(L_procesar[x].index_file) + "bandera_cambio: " + str(L_procesar[x].bandera_cambio))
+            print("len de L_procesar: "+ str(len(L_procesar)))
+            for x in range(0,len(L_procesar)):
+                print ("pos d L_procesar q existen: " + str(L_procesar[x].index_file) + "bandera_cambio: " + str(L_procesar[x].bandera_cambio))
 
 
 
@@ -386,14 +386,14 @@ def MainProcess(connection, cursor, path_porc, path_mat, porcentaje_names, matri
                         if(q.bandera_cambio == 0):
                             #si la comparacion entre fragmentos es buena
                             #if (comparar_fragmentos(p.fragments,q.fragments) == 1):
-                            #print("*********")
-                            #print(p.file_name)
-                            #print("RT: "+ str(p.retention_time)+" MaxScan: " + str(p.max_scan))
-                            #print(q.file_name)
-                            #print("RT: "+ str(q.retention_time)+" MaxScan: " + str(q.max_scan))
-                            #print("*********")
+                            print("*********")
+                            print(p.file_name)
+                            print("RT: "+ str(p.retention_time)+" MaxScan: " + str(p.max_scan))
+                            print(q.file_name)
+                            print("RT: "+ str(q.retention_time)+" MaxScan: " + str(q.max_scan))
+                            print("*********")
                             if (compare_fragments(p.fragments, q.fragments, min_range_accepted, min_porcent_range, max_porcent_range) == True):
-                                #print("bandera_contador" + str(bandera_contador))
+                                print("bandera_contador" + str(bandera_contador))
                                 p.bandera_cambio = bandera_contador    
                                 q.bandera_cambio = bandera_contador
                                 q.pareja = True
