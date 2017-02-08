@@ -25,8 +25,8 @@ import os
 
 from settings import *
 
-from archivos_cibe_V7 import MainProcess
-#from conect_trans import *
+from archivos_cibe_V9 import MainProcess
+from conect_trans import *
 
 
 #def do_work(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza):
@@ -50,6 +50,9 @@ def GetNamesDirectorio( path_dir):
         break
     return f
 
+def last_4chars(x):
+    return(x[-4:])
+
 if __name__ == "__main__":
 
     
@@ -57,95 +60,97 @@ if __name__ == "__main__":
 
     #lista de nombres de archivos de porcentajes del directorio pasado por parámetro
     porcentaje_names = GetNamesDirectorio(dir_porcentajes)
+    porcentaje_names = sorted(porcentaje_names, key = last_4chars) 
     #lista de nombres de archivos de matriz del directorio pasado por parámetro
     matriz_names = GetNamesDirectorio(dir_matrices)
+    matriz_names = sorted(matriz_names, key = last_4chars) 
 
     print (porcentaje_names)
     print(matriz_names)
 
-#    try:
-#        # obtengo conexión
-#        connection = get_base_connection('postgres' , 'postgres' , '')
-#        #obtengo cursor
-#        cursor = get_cursor(connection)
+    try:
+        # obtengo conexión
+        connection = get_base_connection('postgres' , 'postgres' , '')
+        #obtengo cursor
+        cursor = get_cursor(connection)
+
+        # lock to serialize console output
+        #lock = threading.Lock()
+        if opc_run==1 :
+            file_destino = 'align_0.2_280_0.15_0.15_80p_V9'
+            MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
+
+        elif opc_run==2:
+            for intensidad_aceptacion in range(100,5001): #5000
+               #
+                intervalo_time = 0.1
+                while(intervalo_time<=0.5): #5
+ #
+                    file_destino = 'align_'+str(intervalo_time)+'_'+str(intensidad_aceptacion)+'_'+str(min_interval_confianza)+'_'+str(max_interval_confianza)
+       #
+                    MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
+
+                    intervalo_time = round(intervalo_time + 0.1,2)
+
+        elif opc_run==3:
+            for intensidad_aceptacion in range(100,5001):
+               #
+                intervalo_time = 0.1
+                while(intervalo_time<=30): #300
+ #
+                    file_destino = 'align_'+str(intervalo_time)+'_'+str(intensidad_aceptacion)+'_'+str(min_interval_confianza)+'_'+str(max_interval_confianza)
+       #
+                    MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
+
+                    intervalo_time = round(intervalo_time + 0.1,2)
+
+        else:
+            for intensidad_aceptacion in range(100,5000):
+               #
+                intervalo_time = 0.1
+                while(intervalo_time<=30):
+                   #
+                    min_interval_confianza = 0.01
+                    while(min_interval_confianza<=1):
+       
+                        max_interval_confianza = 0.01
+                        while(max_interval_confianza<=1):
+                       #
+                            file_destino = 'align_'+str(intervalo_time)+'_'+str(intensidad_aceptacion)+'_'+str(min_interval_confianza)+'_'+str(max_interval_confianza)
+       
+                            MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
+                       #
+                            max_interval_confianza = round(max_interval_confianza + 0.01,2)
+       #
+                        min_interval_confianza = round(min_interval_confianza + 0.01,2)
+       #
+                    intervalo_time = round(intervalo_time + 0.1,2)
+       #
+
+        # Create the queue and thread pool.
+#        q = Queue()
+#        for i in range(4):
+#             t = threading.Thread(target=worker)
+#             t.daemon = True  # thread dies when main thread (only non-daemon thread) exits.
+#             t.start()
 #
-#        # lock to serialize console output
-#        #lock = threading.Lock()
-#        if opc_run==1 :
-#            file_destino = 'align_0.2_278_0.15_0.15'
-#            MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
+#        for intensidad_aceptacion in range(100,103):
+       #
+#            q.put((connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza))
 #
-#        elif opc_run==2:
-#            for intensidad_aceptacion in range(100,5001): #5000
-                #
-#                intervalo_time = 0.1
-#                while(intervalo_time<=0.5): #5
-  #
-#                    file_destino = 'align_'+str(intervalo_time)+'_'+str(intensidad_aceptacion)+'_'+str(min_interval_confianza)+'_'+str(max_interval_confianza)
-        #
-#                    MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
-#
-#                    intervalo_time = round(intervalo_time + 0.1,2)
-#
-#        elif opc_run==3:
-#            for intensidad_aceptacion in range(100,5001):
-                #
-#                intervalo_time = 0.1
-#                while(intervalo_time<=30): #300
-  #
-#                    file_destino = 'align_'+str(intervalo_time)+'_'+str(intensidad_aceptacion)+'_'+str(min_interval_confianza)+'_'+str(max_interval_confianza)
-        #
-#                    MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
-#
-#                    intervalo_time = round(intervalo_time + 0.1,2)
-#
-#        else:
-#            for intensidad_aceptacion in range(100,5000):
-                #
-#                intervalo_time = 0.1
-#                while(intervalo_time<=30):
-                    #
-#                    min_interval_confianza = 0.01
-#                    while(min_interval_confianza<=1):
-        #
-#                        max_interval_confianza = 0.01
-#                        while(max_interval_confianza<=1):
-                        #
-#                            file_destino = 'align_'+str(intervalo_time)+'_'+str(intensidad_aceptacion)+'_'+str(min_interval_confianza)+'_'+str(max_interval_confianza)
-        #
-#                            MainProcess(connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza)
-                        #
-#                            max_interval_confianza = round(max_interval_confianza + 0.01,2)
-        #
-#                        min_interval_confianza = round(min_interval_confianza + 0.01,2)
-        #
-#                    intervalo_time = round(intervalo_time + 0.1,2)
-        #
-#
-#        # Create the queue and thread pool.
-##        q = Queue()
-##        for i in range(4):
-##             t = threading.Thread(target=worker)
-##             t.daemon = True  # thread dies when main thread (only non-daemon thread) exits.
-##             t.start()
-##
-##        for intensidad_aceptacion in range(100,103):
-        #
-##            q.put((connection, cursor, dir_porcentajes, dir_matrices, porcentaje_names, matriz_names, dir_destino, intervalo_time, file_destino, intensidad_aceptacion, min_interval_confianza, max_interval_confianza))
-##
-##        q.join()       # block until all tasks are done
-#
-#
-#        close_connection(connection)
-#
-#        logging.info('Finished')
-#
-#    except Exception as e:
-#        error_msg = str(e)
-#        print (error_msg)
-#        logging.error(error_msg)
-#        logging.exception("*exceptionFE*")
-#        close_connection(connection)
+#        q.join()       # block until all tasks are done
+
+
+        close_connection(connection)
+
+        logging.info('Finished')
+
+    except Exception as e:
+        error_msg = str(e)
+        print (error_msg)
+        logging.error(error_msg)
+        logging.exception("*exceptionFE*")
+        close_connection(connection)
 
 
 

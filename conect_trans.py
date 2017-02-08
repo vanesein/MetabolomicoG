@@ -96,13 +96,118 @@ def select_max_oid_result(connection , cursor ):
 	total = ((rows[0])[0])
 	return total
 
+
+
+
+
+
+
+
+
+
 def select_max_oid_result_process(connection, cursor):
-	sentencia = "select CASE WHEN max(oid)+1 is null then 1 else max(oid)+1 end as total from procesos"
-	rows = execute_select(cursor , sentencia)	
-	#total = rows[0]["total"]
-	total = ((rows[0])[0])
-	return total
+    sentencia = "select CASE WHEN max(oid)+1 is null then 1 else max(oid)+1 end as total from procesos"
+    rows = execute_select(cursor , sentencia)   
+    #total = rows[0]["total"]
+    total = ((rows[0])[0])
+    return total
+
+def create_process(connection, cursor):
+    last_oid = select_max_oid_result_process(connection, cursor)
+    sentencia = "insert into procesos (oid) values ("+str(last_oid)+")"
+    execute_transaction(connection , cursor , sentencia)
+    return last_oid
+
+
+def select_max_oid_intervalos(connection , cursor ):
+    sentencia = "select CASE WHEN max(oid)+1 is null then 1 else max(oid)+1 end as total from intervalos"
+    rows = execute_select(cursor , sentencia)   
+    #total = rows[0]["total"]
+    total = ((rows[0])[0])
+    return total
+
+def guardar_intervalo(connection, cursor, intervalo_oid, min_time, max_time, len_lprocesar, lprocesar_procesar_pos, proceso_oid):
+    sentencia = "insert into intervalos (oid, minimo, maximo, len_lprocesar, lprocesar_procesar_pos, procesos_oid) values ("+str(intervalo_oid)+", '"+str(min_time)+"',  '"+str(max_time)+"' , "+str(len_lprocesar)+", '"+ str(lprocesar_procesar_pos)+"', "+str(proceso_oid)+")"
+    execute_transaction(connection , cursor , sentencia)
+
+
+def select_max_oid_files_rt_detail(connection, cursor):
+    sentencia = "select CASE WHEN max(oid)+1 is null then 1 else max(oid)+1 end as total from files_rt_detail"
+    rows = execute_select(cursor , sentencia)   
+    #total = rows[0]["total"]
+    total = ((rows[0])[0])
+    return total
+
+
+def insert_files_rt_detail(connection, cursor, files_rt_detail_oid, file1, rt1_mxscan, file2, rt2_mxscan, intervalo_oid):
+    sentencia = "insert into files_rt_detail (oid, file1, rt1_mxscan, file2, rt2_mxscan, intervalos_oid) values ("+str(files_rt_detail_oid)+", '"+str(file1)+"',  '"+str(rt1_mxscan)+"' , '"+str(file2)+"', '"+ str(rt2_mxscan)+"', "+str(intervalo_oid)+")"
+    execute_transaction(connection , cursor , sentencia)
+
+
+def updated_file_rt_detail(connection,cursor, last_file_rt_detail_oid, count_elem1, count_elem2, total_linea1, total_linea2, val, trunc, r, porcent_90):
+    sentencia = "update files_rt_detail set count_elem1 = "+str(count_elem1)+", count_elem2 = "+str(count_elem2)+", total_linea1 = "+str(total_linea1)+" , total_linea2 = "+str(total_linea2)+", val = "+ str(val)+", trunc = "+str(trunc)+", round = "+str(r)+", porcent_90 = "+str(porcent_90)+" where oid = "+ str(last_file_rt_detail_oid)+""
+    execute_transaction(connection , cursor , sentencia)
+
+
+def select_max_oid_compare_fragments(connection, cursor):
+    sentencia = "select CASE WHEN max(oid)+1 is null then 1 else max(oid)+1 end as total from compare_fragments"
+    rows = execute_select(cursor , sentencia)   
+    #total = rows[0]["total"]
+    total = ((rows[0])[0])
+    return total
+
+
+def insert_compare_fragments(connection, cursor, last_compare_fragment_oid, pos, esp, esp2, porc1, porc2, files_rt_detail_oid):
+    sentencia = "insert into compare_fragments(oid, pos, esp, esp2, porc1, porc2, file_rt_detail_oid) values ("+str(last_compare_fragment_oid)+", "+str(pos)+",  "+str(esp)+", "+str(esp2)+", "+ str(porc1)+", "+ str(porc2)+", "+str(files_rt_detail_oid)+")"
+    execute_transaction(connection , cursor , sentencia)
+
+
+def updated_limits_fragments(connection,cursor, last_compare_fragment_oid, limit1, limit2):
+    sentencia = "update compare_fragments set limit1 = "+str(limit1)+", limit2 = " +str(limit2)+" where oid = "+ str(last_compare_fragment_oid)+""
+    execute_transaction(connection , cursor , sentencia)
+
+
+def updated_equal_fragments(connection,cursor, last_compare_fragment_oid, equal):
+    sentencia = "update compare_fragments set entro = "+equal+" where oid = "+ str(last_compare_fragment_oid)+""
+    execute_transaction(connection , cursor , sentencia)
+
+
+def updated_match_file_rt_detail(connection,cursor, last_file_rt_detail_oid, count):
+    sentencia = "update files_rt_detail set num_coincidieron = "+str(count)+" where oid = "+ str(last_file_rt_detail_oid)+""
+    execute_transaction(connection , cursor , sentencia)
+
+
+def updated_bandera_file_rt_detail(connection,cursor, last_file_rt_detail_oid, bandera):
+    sentencia = "update files_rt_detail set banderacontador = "+str(bandera)+" where oid = "+ str(last_file_rt_detail_oid)+""
+    execute_transaction(connection , cursor , sentencia)
+
+
+def select_max_oid_lprocesar_final(connection, cursor):
+    sentencia = "select CASE WHEN max(oid)+1 is null then 1 else max(oid)+1 end as total from lprocesar_final"
+    rows = execute_select(cursor , sentencia)   
+    #total = rows[0]["total"]
+    total = ((rows[0])[0])
+    return total
+
+def insert_lprocesar_final(connection, cursor, last_lprocesar_final_oid, detalle, intervalo_oid):
+    sentencia = "insert into lprocesar_final (oid, intervalo_oid, detalle) values ("+str(last_lprocesar_final_oid)+", "+str(intervalo_oid)+",  '"+str(detalle)+"')"
+    execute_transaction(connection , cursor , sentencia)
+
+
+def select_max_oid_cprocesar_final(connection, cursor):
+    sentencia = "select CASE WHEN max(oid)+1 is null then 1 else max(oid)+1 end as total from cprocesar_final"
+    rows = execute_select(cursor , sentencia)   
+    #total = rows[0]["total"]
+    total = ((rows[0])[0])
+    return total
+
+
+def insert_cprocesar_final(connection, cursor, last_cprocesar_final_oid, detalle, intervalo_oid, lprocesar_final_oid,):
+    sentencia = "insert into cprocesar_final (oid, lprocesar_final_oid, intervalo_oid, detalle) values ("+str(last_cprocesar_final_oid)+", "+str(lprocesar_final_oid)+" ,"+str(intervalo_oid)+",  '"+str(detalle)+"')"
+    execute_transaction(connection , cursor , sentencia)
+
 
 def guardar_info_proces(connection, cursor, last_oid_proceso, tiempo_ejecucion_alineamiento, tiempo_ejecucion_proceso, intervalo_time, intensidad_aceptacion, min_interval_confianza, max_interval_confianza, file_destino, num_alineaciones):
-    sentencia = "insert into procesos (oid, tiempo_ejecucion_alineamiento, tiempo_ejecucion_proceso, intervalo_time, intensidad_aceptacion, min_interval_confianza, max_interval_confianza, archivo, num_alineaciones) values ("+str(last_oid_proceso)+", "+str(tiempo_ejecucion_alineamiento)+",  "+str(tiempo_ejecucion_proceso)+" , "+str(intervalo_time)+", "+ str(intensidad_aceptacion)+", "+str(min_interval_confianza)+" , "+str(max_interval_confianza)+", '" + file_destino + "', "+ str(num_alineaciones)+")"
+    sentencia = "update procesos set tiempo_ejecucion_alineamiento= "+str(tiempo_ejecucion_alineamiento)+", tiempo_ejecucion_proceso = "+str(tiempo_ejecucion_proceso)+", intervalo_time = "+str(intervalo_time)+", intensidad_aceptacion = "+ str(intensidad_aceptacion)+", min_interval_confianza = "+str(min_interval_confianza)+" , max_interval_confianza = "+str(max_interval_confianza)+", archivo = '" + file_destino + "', num_alineaciones = "+ str(num_alineaciones)+" where oid = "+str(last_oid_proceso)+""
     execute_transaction(connection , cursor , sentencia)
+
